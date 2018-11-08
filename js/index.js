@@ -8,6 +8,12 @@ function timestampToTime(timestamp) {
     var s = date.getSeconds();
     return Y+M+D+h+m+s;
 }
+function getQueryString(name) {
+    var reg = new RegExp("(^|&|[?])" + name + "=([^&]*)(&|$)")
+    var r = window.location.href.substr(1).match(reg)
+    var newName = (r != null ? r[2] : "")
+    return newName
+}
 $(function(){
     // setTimeout(function(){
         function charts(chartData,chartTit){
@@ -21,9 +27,9 @@ $(function(){
                 },
                 grid:{
                     x:80,
-                    y:80,
+                    y:100,
                     x2:80,
-                    y2:80,
+                    y2:20,
                 },
 
                 xAxis:  {
@@ -53,10 +59,11 @@ $(function(){
             };
             return option
         }
+        console.log(2)
         chrome.storage.sync.get(["status"],function(date){
             if(date.status&&date.status=='yes'){
                 //JD
-                if(location.href.indexOf('jd')){
+                if(location.href.indexOf('jd')>=0){
                     $(".product-intro").prepend("<div id='changdechuang'></div>");
                     var myChart = echarts.init(document.getElementById("changdechuang"));
                     var url = location.href.split('/');
@@ -69,7 +76,32 @@ $(function(){
                         method: 'GET',
                         dataType:'JSON',
                         success:  (res)=>{
-                        console.log(res)
+                        },
+                        error:  (err)=>{
+                            var a =  err.responseText;
+                            var data = JSON.parse(a.substring(a.indexOf('(')+1,a.length-1));
+                            var chartData = [];
+                            var chartTit = [];
+                            data.store[0].data.forEach((item,index)=>{
+                                chartData.push(item[1])
+                                chartTit.push(timestampToTime(item[0]/1000))
+                            })
+                            myChart.setOption(charts(chartData,chartTit));
+                        },  
+                    })  
+                }else if(location.href.indexOf('tmall')>=0){ //天猫
+                    $("#detail").prepend("<div id='changdechuang'></div>");
+                    var myChart = echarts.init(document.getElementById("changdechuang"));
+                    var id = getQueryString('id');
+                    // let id = url.filter((item,index)=>{
+                    //     return item.indexOf('.html') != -1
+                    // })[0].split('.')[0];
+                    // // console.log(getJdData(id))
+                    $.ajax({
+                        url: `https://www.gwdang.com/product/price_trend/?callback=jQuery15109527255834354762_1541660520013&dp_id=${id}-83&days=180&is_only_one=0&etao=1&crc64=1&_=1541660520084`,
+                        method: 'GET',
+                        dataType:'JSON',
+                        success:  (res)=>{
                         },
                         error:  (err)=>{
                             var a =  err.responseText;
@@ -88,3 +120,4 @@ $(function(){
         })
     // },2000)
 })
+// https://www.gwdang.com/product/price_trend/?callback=jQuery15109527255834354762_1541660520013&dp_id=27001392378-83&days=180&is_only_one=0&etao=1&crc64=1&_=1541660520084
