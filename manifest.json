@@ -1,0 +1,54 @@
+{
+   
+	"manifest_version": 2,
+	
+	"name": "历史价格查询",
+	
+	"version": "1.0.0",
+	
+	"description": "目前仅支持京东，天猫，淘宝",
+	
+	"icons":{
+		"16": "img/shop_16px_1158182_easyicon.net.png",
+		"48": "img/shop_48px_1158182_easyicon.net.png",
+		"128": "img/shop_128px_1158182_easyicon.net.png"
+    },
+    "background":{
+		
+		"page": "background.html"
+    },
+    "content_scripts": 
+    [
+        {
+			"matches": [
+				"https://item.jd.com/*",
+				"https://detail.tmall.com/*",
+				"https://item.taobao.com/*"
+			],
+            "js": ["js/jquery.js","js/echarts.min.js","js/index.js"],
+            "css": ["css/style.css"],
+            "run_at": "document_start"
+        }
+    ],
+    "browser_action": {
+		"default_icon": "img/shop_16px_1158182_easyicon.net.png",
+		"default_title": "商品历史价格检索,QQ948443643",
+		"default_popup": "popup.html"
+	},
+    "permissions":[
+		"bookmarks",
+		"webNavigation",
+		"activeTab",
+		"cookies",
+		"contextMenus",
+		"tabs",
+		"notifications", 
+		"webRequest", 
+		"notifications",
+		"webRequestBlocking",
+		"storage",
+		"http://*/",
+    	"https://*/"
+	]
+	
+}

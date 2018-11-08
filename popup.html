@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<link href="./css/bootstrap.css" rel="stylesheet">
+<link rel="stylesheet" href="./css/style.css">
+<body>
+
+    <div id='changeColor' class="box">
+        <h3 style="padding-bottom:20px" class="text-center">请输入密码</h3>
+        
+        <div class="form-group">
+            <label for="password">密码</label>
+            <input type="password" class="form-control" id="password" placeholder="密码">
+        </div>
+        <div class="alert alert-danger" role="alert">
+            密码错误：请联系QQ948443643
+        </div>
+        <button style="width:100%" id="login_submit" class="btn btn-primary">登录</button>
+    </div>
+    <div id='changeColor2' class="box">
+        <h3 style="padding-bottom:20px" class="text-center">已登录</h3>
+        <div class="alert alert-success" role="alert">
+            历史价格功能查询已开启
+        </div>
+        <button style="width:100%" id="logout_submit" class="btn btn-primary">退出登录</button>
+    </div>
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="./js/jquery.js"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="./js/bootstrap.js"></script>
+
+    <script src="./js/crypto-js.js"></script>
+    <script src="./js/popup.js"></script>
+</body>
+</html>
